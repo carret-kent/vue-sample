@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Vue.js App</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+<div id="app">
+  <div class="radio-group">
+    <div class="radio" v-for="option in options" :key="option.value">
+      <input id="{{ option.value }}" type="radio" v-model="current" :id="option.value" :value="option.value">
+      <label :for="option.value">{{ option.label }}</label>
+    </div>
+    <span>{{ computedTodos.length }} 件を表示中</span>
+  </div>
+  <table>
+    <!-- テーブルヘッダー -->
+    <thead>
+    <tr>
+      <th class="id">ID</th>
+      <th class="comment">コメント</th>
+      <th class="state">状態</th>
+      <th class="button">-</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr v-for="item in computedTodos" :key="item.id">
+      <th>{{ item.id }}</th>
+      <th>{{ item.comment }}</th>
+      <th class="state">
+        <!--状態変更ボタン-->
+        <button class="btn-default" @click="doChangeState(item)">
+          {{ labels[item.status] }}
+        </button>
+      </th>
+      <th class="delete">
+        <!--削除ボタン-->
+        <button class="btn-danger" @click="doRemove(item)">削除</button>
+      </th>
+    </tr>
+    </tbody>
+  </table>
+
+  <h2>新しい作業の追加</h2>
+  <form class="add-form" @submit.prevent="doAdd">
+    コメント:
+    <input type="text" ref="comment">
+    <button type="submit" class="btn-default">追加</button>
+  </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
